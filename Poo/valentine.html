@@ -1,0 +1,635 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>For You 💕</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Georgia', serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        /* Floating hearts background */
+        .heart-bg {
+            position: fixed;
+            font-size: 30px;
+            color: rgba(255, 255, 255, 0.3);
+            animation: float-up 8s infinite;
+            pointer-events: none;
+        }
+
+        @keyframes float-up {
+            0% {
+                transform: translateY(100vh) rotate(0deg);
+                opacity: 0;
+            }
+            10% {
+                opacity: 1;
+            }
+            90% {
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(-100px) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+        /* Page containers */
+        .page {
+            display: none;
+            background: rgba(255, 255, 255, 0.95);
+            padding: 60px 50px;
+            border-radius: 30px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            text-align: center;
+            max-width: 600px;
+            position: relative;
+            z-index: 10;
+            animation: fadeIn 1s ease-in;
+        }
+
+        .page.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: scale(0.8);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        .big-heart {
+            font-size: 100px;
+            animation: heartbeat 1.5s infinite;
+            display: inline-block;
+            margin: 30px 0;
+        }
+
+        @keyframes heartbeat {
+            0%, 100% {
+                transform: scale(1);
+            }
+            25% {
+                transform: scale(1.1);
+            }
+            50% {
+                transform: scale(1);
+            }
+            75% {
+                transform: scale(1.15);
+            }
+        }
+
+        h1 {
+            color: #e91e63;
+            font-size: 3.5em;
+            margin: 20px 0;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+            animation: glow 2s ease-in-out infinite;
+        }
+
+        @keyframes glow {
+            0%, 100% {
+                text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+            }
+            50% {
+                text-shadow: 0 0 20px rgba(233, 30, 99, 0.6);
+            }
+        }
+
+        button {
+            margin-top: 40px;
+            padding: 20px 50px;
+            font-size: 1.5em;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: bold;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            color: white;
+        }
+
+        button:hover {
+            transform: scale(1.1);
+            box-shadow: 0 8px 25px rgba(245, 87, 108, 0.4);
+        }
+
+        button:active {
+            transform: scale(0.95);
+        }
+
+        .sparkle {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            background: #ffd700;
+            border-radius: 50%;
+            pointer-events: none;
+            animation: sparkle-animation 1s ease-out forwards;
+        }
+
+        @keyframes sparkle-animation {
+            0% {
+                transform: scale(0) rotate(0deg);
+                opacity: 1;
+            }
+            100% {
+                transform: scale(1) rotate(180deg);
+                opacity: 0;
+            }
+        }
+
+        .envelope {
+            width: 80px;
+            height: 60px;
+            margin: 20px auto;
+            font-size: 60px;
+            animation: bounce 2s infinite;
+        }
+
+        @keyframes bounce {
+            0%, 100% {
+                transform: translateY(0);
+            }
+            50% {
+                transform: translateY(-10px);
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Background hearts -->
+    <div id="hearts-container"></div>
+
+    <!-- Page 1: Apooorvaaaaa -->
+    <div class="page active" id="page1">
+        <div class="envelope">💌</div>
+        <div class="big-heart">❤️</div>
+        <h1>Apooorvaaaaa</h1>
+        <button onclick="goToPage2()">Yess?</button>
+    </div>
+
+    <!-- Page 2: Muduuuuu -->
+    <div class="page" id="page2">
+        <div class="envelope">💝</div>
+        <div class="big-heart">💕</div>
+        <h1>Muduuuuu</h1>
+        <button onclick="goToPage3()">Hmmmm???</button>
+    </div>
+
+    <!-- Page 3: My Loveee -->
+    <div class="page" id="page3">
+        <div class="envelope">💖</div>
+        <div class="big-heart">💗</div>
+        <h1>My Loveee</h1>
+        <button onclick="goToPage4()">Yesss???</button>
+    </div>
+
+    <!-- Page 4: The Big Message Part 1 -->
+    <div class="page" id="page4">
+        <div class="big-heart">💕</div>
+        <h2 style="color: #e91e63; font-size: 2.5em; margin: 20px 0;">Apoorva</h2>
+        
+        <div style="text-align: left; max-width: 500px; margin: 30px auto; line-height: 2; font-size: 1.1em; color: #555;">
+            <p style="margin-bottom: 20px;">
+                <strong style="color: #e91e63;">April 2022</strong> — the month that changed everything. The moment we met, my world changed. What I didn't know then was that I had just met the person who would become my everything.
+            </p>
+            
+            <p style="margin-bottom: 20px;">
+                From that day forward, you've been my constant companion, my safe harbour, my greatest joy. You stood beside me through every storm and celebrated every sunshine. You became the best thing that ever happened to me, not just a part of my life, but the very heart of it.
+            </p>
+            
+            <p style="margin-bottom: 20px;">
+                Four years have flown by like a beautiful dream. And yes, we've had some rough patches lately. I've spent countless nights thinking, reflecting, searching my heart... and every single time, I come back to the same truth:
+            </p>
+            
+            <p style="margin-bottom: 30px; font-style: italic; color: #e91e63;">
+                There is absolutely no one else I want to share this life with. Not yesterday, not today, not ever.
+            </p>
+        </div>
+        
+        <div style="margin: 40px 0;">
+            <h1 style="font-size: 2.8em; color: #e91e63; margin: 20px 0; line-height: 1.4;">
+                So my love,<br>
+                Apoorva Bhat...
+            </h1>
+        </div>
+        
+        <button onclick="goToPage5()">Whaaat??</button>
+    </div>
+    
+    <!-- Page 5: The Valentine Question - Interactive -->
+    <div class="page" id="page5">
+        <img src="https://media.giphy.com/media/l2QDM9Jnim1YVILXa/giphy.gif" alt="Teddy with Hearts" style="width: 200px; border-radius: 20px; margin: 20px 0;">
+        <div class="big-heart">💖</div>
+        <h1 style="font-size: 3.5em; color: #d81b60; margin: 30px 0; animation: pulse 2s infinite;">
+            Will You Be My Valentine? 💖
+        </h1>
+        
+        <div class="buttons" style="margin-top: 40px; display: flex; gap: 20px; justify-content: center; position: relative;">
+            <button class="yes-btn" onclick="sayYes()" style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%); padding: 20px 60px; font-size: 1.3em;">YES! 💕</button>
+            <button class="no-btn" id="noBtn" onmouseover="runAway(this)" onclick="runAway(this)" style="background: #ddd; color: #666; padding: 20px 60px; font-size: 1.3em; position: relative;">No</button>
+        </div>
+    </div>
+    
+    <!-- Celebration Page -->
+    <div class="page" id="celebration" style="display: none;">
+        <div style="animation: celebrationPop 0.8s ease-out;">
+            <div class="big-heart" style="font-size: 150px;">🎉</div>
+            <h1 style="font-size: 3.5em; color: #e91e63; margin: 30px 0;">Yeyy! I knew it!! 💖</h1>
+            <img src="couple_photo.jpeg" alt="Us" style="width: 300px; height: 300px; object-fit: cover; border-radius: 20px; margin: 30px 0; box-shadow: 0 10px 30px rgba(0,0,0,0.3);">
+            <div class="big-heart" style="font-size: 120px;">💕</div>
+            <p style="font-size: 1.8em; color: #555; margin: 30px 0; font-style: italic;">
+                You just made me the happiest person alive!
+            </p>
+            <button onclick="goToGame()" style="margin-top: 30px; padding: 20px 50px; font-size: 1.3em; background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%); color: white; border: none; border-radius: 50px; cursor: pointer;">
+                Let's Play a Game! 🎮
+            </button>
+            <div id="fireworks-container"></div>
+        </div>
+    </div>
+    
+    <!-- BTS Game Page -->
+    <div class="page" id="btsGame" style="display: none;">
+        <h1 style="font-size: 2.5em; color: #e91e63; margin: 30px 0;">Quick Question! 💜</h1>
+        <p style="font-size: 1.3em; color: #555; margin: 20px 0;">Who is your favorite person?</p>
+        <p style="font-size: 1em; color: #999; margin: 10px 0;">Click on your favorite!</p>
+        
+        <div id="btsGrid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 20px; margin: 40px auto; max-width: 700px;">
+            <!-- BTS Member Cards will flip to reveal your picture -->
+            <div class="flip-card" onclick="flipCard(this, 0)">
+                <div class="flip-card-inner">
+                    <div class="flip-card-front">
+                        <img src="rm.jpg" alt="RM" style="width: 100%; height: 200px; object-fit: cover; border-radius: 15px;">
+                        <p style="margin-top: 10px; font-weight: bold; color: #e91e63;">RM</p>
+                    </div>
+                    <div class="flip-card-back">
+                        <img src="your_photo.jpeg" alt="You" style="width: 100%; height: 200px; object-fit: cover; border-radius: 15px;">
+                        <p style="margin-top: 10px; font-weight: bold; color: #e91e63;">It's Me! 💕</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="flip-card" onclick="flipCard(this, 1)">
+                <div class="flip-card-inner">
+                    <div class="flip-card-front">
+                        <img src="jin.jpg" alt="Jin" style="width: 100%; height: 200px; object-fit: cover; border-radius: 15px;">
+                        <p style="margin-top: 10px; font-weight: bold; color: #e91e63;">Jin</p>
+                    </div>
+                    <div class="flip-card-back">
+                        <img src="your_photo.jpeg" alt="You" style="width: 100%; height: 200px; object-fit: cover; border-radius: 15px;">
+                        <p style="margin-top: 10px; font-weight: bold; color: #e91e63;">It's Me! 💕</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="flip-card" onclick="flipCard(this, 2)">
+                <div class="flip-card-inner">
+                    <div class="flip-card-front">
+                        <img src="suga.jpg" alt="Suga" style="width: 100%; height: 200px; object-fit: cover; border-radius: 15px;">
+                        <p style="margin-top: 10px; font-weight: bold; color: #e91e63;">Suga</p>
+                    </div>
+                    <div class="flip-card-back">
+                        <img src="your_photo.jpeg" alt="You" style="width: 100%; height: 200px; object-fit: cover; border-radius: 15px;">
+                        <p style="margin-top: 10px; font-weight: bold; color: #e91e63;">It's Me! 💕</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="flip-card" onclick="flipCard(this, 3)">
+                <div class="flip-card-inner">
+                    <div class="flip-card-front">
+                        <img src="jhope.jpg" alt="J-Hope" style="width: 100%; height: 200px; object-fit: cover; border-radius: 15px;">
+                        <p style="margin-top: 10px; font-weight: bold; color: #e91e63;">J-Hope</p>
+                    </div>
+                    <div class="flip-card-back">
+                        <img src="your_photo.jpeg" alt="You" style="width: 100%; height: 200px; object-fit: cover; border-radius: 15px;">
+                        <p style="margin-top: 10px; font-weight: bold; color: #e91e63;">It's Me! 💕</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="flip-card" onclick="flipCard(this, 4)">
+                <div class="flip-card-inner">
+                    <div class="flip-card-front">
+                        <img src="jimin.jpg" alt="Jimin" style="width: 100%; height: 200px; object-fit: cover; border-radius: 15px;">
+                        <p style="margin-top: 10px; font-weight: bold; color: #e91e63;">Jimin</p>
+                    </div>
+                    <div class="flip-card-back">
+                        <img src="your_photo.jpeg" alt="You" style="width: 100%; height: 200px; object-fit: cover; border-radius: 15px;">
+                        <p style="margin-top: 10px; font-weight: bold; color: #e91e63;">It's Me! 💕</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="flip-card" onclick="flipCard(this, 5)">
+                <div class="flip-card-inner">
+                    <div class="flip-card-front">
+                        <img src="v.jpg" alt="V" style="width: 100%; height: 200px; object-fit: cover; border-radius: 15px;">
+                        <p style="margin-top: 10px; font-weight: bold; color: #e91e63;">V</p>
+                    </div>
+                    <div class="flip-card-back">
+                        <img src="your_photo.jpeg" alt="You" style="width: 100%; height: 200px; object-fit: cover; border-radius: 15px;">
+                        <p style="margin-top: 10px; font-weight: bold; color: #e91e63;">It's Me! 💕</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="flip-card" onclick="flipCard(this, 6)">
+                <div class="flip-card-inner">
+                    <div class="flip-card-front">
+                        <img src="jungkook.jpg" alt="Jungkook" style="width: 100%; height: 200px; object-fit: cover; border-radius: 15px;">
+                        <p style="margin-top: 10px; font-weight: bold; color: #e91e63;">Jungkook</p>
+                    </div>
+                    <div class="flip-card-back">
+                        <img src="your_photo.jpeg" alt="You" style="width: 100%; height: 200px; object-fit: cover; border-radius: 15px;">
+                        <p style="margin-top: 10px; font-weight: bold; color: #e91e63;">It's Me! 💕</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div id="revealMessage" style="display: none; margin-top: 40px; animation: fadeIn 1s ease-in;">
+            <div class="big-heart" style="font-size: 80px;">😄</div>
+            <h2 style="font-size: 2.5em; color: #e91e63; margin: 20px 0;">Haha! I knew I'm your favorite! 💕</h2>
+            <p style="font-size: 1.3em; color: #555; line-height: 1.8; max-width: 600px; margin: 30px auto;">
+                I love you a lot, Muduuuuu! ❤️<br><br>
+                I just hope we have a new beginning filled with love, happiness, and success.<br><br>
+                You mean a lot to me.<br><br>
+                <strong style="color: #e91e63; font-size: 1.2em;">Love you loads! 💖</strong>
+            </p>
+        </div>
+    </div>
+    
+    <style>
+        .flip-card {
+            background-color: transparent;
+            perspective: 1000px;
+            cursor: pointer;
+        }
+        
+        .flip-card-inner {
+            position: relative;
+            width: 100%;
+            text-align: center;
+            transition: transform 0.6s;
+            transform-style: preserve-3d;
+        }
+        
+        .flip-card.flipped .flip-card-inner {
+            transform: rotateY(180deg);
+        }
+        
+        .flip-card-front, .flip-card-back {
+            position: relative;
+            width: 100%;
+            backface-visibility: hidden;
+        }
+        
+        .flip-card-back {
+            position: absolute;
+            top: 0;
+            left: 0;
+            transform: rotateY(180deg);
+        }
+    </style>
+    
+    <style>
+        @keyframes pulse {
+            0%, 100% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.05);
+            }
+        }
+        
+        @keyframes celebrationPop {
+            0% {
+                transform: scale(0);
+                opacity: 0;
+            }
+            50% {
+                transform: scale(1.1);
+            }
+            100% {
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
+        
+        .buttons {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+        
+        .firework {
+            position: fixed;
+            width: 5px;
+            height: 5px;
+            border-radius: 50%;
+            animation: explode 1s ease-out forwards;
+        }
+        
+        @keyframes explode {
+            0% {
+                transform: scale(0);
+                opacity: 1;
+            }
+            100% {
+                transform: scale(30);
+                opacity: 0;
+            }
+        }
+    </style>
+
+    <script>
+        // Create floating hearts background
+        function createFloatingHearts() {
+            const container = document.getElementById('hearts-container');
+            const hearts = ['❤️', '💕', '💖', '💗', '💝'];
+            
+            setInterval(() => {
+                const heart = document.createElement('div');
+                heart.className = 'heart-bg';
+                heart.textContent = hearts[Math.floor(Math.random() * hearts.length)];
+                heart.style.left = Math.random() * 100 + 'vw';
+                heart.style.animationDuration = (Math.random() * 5 + 5) + 's';
+                heart.style.fontSize = (Math.random() * 30 + 20) + 'px';
+                container.appendChild(heart);
+                
+                setTimeout(() => heart.remove(), 10000);
+            }, 500);
+        }
+
+        // Create sparkle effect on button click
+        function createSparkles(event) {
+            for (let i = 0; i < 20; i++) {
+                const sparkle = document.createElement('div');
+                sparkle.className = 'sparkle';
+                sparkle.style.left = event.clientX + (Math.random() - 0.5) * 100 + 'px';
+                sparkle.style.top = event.clientY + (Math.random() - 0.5) * 100 + 'px';
+                document.body.appendChild(sparkle);
+                
+                setTimeout(() => sparkle.remove(), 1000);
+            }
+        }
+
+        // Page navigation functions
+        function goToPage2() {
+            createSparkles(event);
+            setTimeout(() => {
+                document.getElementById('page1').classList.remove('active');
+                document.getElementById('page2').classList.add('active');
+            }, 300);
+        }
+
+        function goToPage3() {
+            createSparkles(event);
+            setTimeout(() => {
+                document.getElementById('page2').classList.remove('active');
+                document.getElementById('page3').classList.add('active');
+            }, 300);
+        }
+
+        function goToPage4() {
+            createSparkles(event);
+            setTimeout(() => {
+                document.getElementById('page3').classList.remove('active');
+                document.getElementById('page4').classList.add('active');
+            }, 300);
+        }
+        
+        function goToPage5() {
+            createSparkles(event);
+            setTimeout(() => {
+                document.getElementById('page4').classList.remove('active');
+                document.getElementById('page5').classList.add('active');
+            }, 300);
+        }
+        
+        // Yes button - Show celebration
+        function sayYes() {
+            createSparkles(event);
+            setTimeout(() => {
+                document.getElementById('page5').style.display = 'none';
+                document.getElementById('celebration').style.display = 'block';
+                createFireworks();
+            }, 300);
+        }
+        
+        // No button - Runs away! Counter for attempts
+        let runAwayCount = 0;
+        
+        function runAway(button) {
+            runAwayCount++;
+            
+            if (runAwayCount <= 15) {
+                // Stay on screen for first 15 tries
+                // Get viewport dimensions
+                const viewportWidth = window.innerWidth;
+                const viewportHeight = window.innerHeight;
+                
+                // Calculate random position that keeps button fully visible
+                const buttonWidth = 150;
+                const buttonHeight = 60;
+                
+                // Random position with safe margins
+                const randomX = Math.random() * (viewportWidth - buttonWidth - 100) - (viewportWidth / 2) + 50;
+                const randomY = Math.random() * (viewportHeight - buttonHeight - 150) - (viewportHeight / 2);
+                
+                button.style.position = 'fixed';
+                button.style.left = '50%';
+                button.style.top = '50%';
+                button.style.transform = `translate(${randomX}px, ${randomY}px)`;
+                button.style.transition = 'all 0.3s ease';
+                
+                // Make Yes button slightly bigger each time
+                const yesBtn = document.querySelector('.yes-btn');
+                const scale = 1 + (runAwayCount * 0.04);
+                yesBtn.style.transform = `scale(${scale})`;
+                yesBtn.style.transition = 'all 0.3s ease';
+            } else {
+                // After 15 tries, move off screen!
+                button.style.position = 'fixed';
+                button.style.transform = 'translate(2000px, -1000px)';
+                button.style.transition = 'all 0.8s ease';
+                
+                setTimeout(() => {
+                    button.style.display = 'none';
+                }, 800);
+            }
+        }
+        
+        // Create fireworks for celebration
+        function createFireworks() {
+            const container = document.getElementById('fireworks-container');
+            const colors = ['#ff0000', '#ff69b4', '#ff1493', '#ffd700', '#ff6347', '#da70d6'];
+            
+            setInterval(() => {
+                for (let i = 0; i < 3; i++) {
+                    const firework = document.createElement('div');
+                    firework.className = 'firework';
+                    firework.style.left = Math.random() * 100 + '%';
+                    firework.style.top = Math.random() * 100 + '%';
+                    firework.style.background = colors[Math.floor(Math.random() * colors.length)];
+                    container.appendChild(firework);
+                    
+                    setTimeout(() => firework.remove(), 1000);
+                }
+            }, 300);
+        }
+        
+        // Go to BTS Game
+        function goToGame() {
+            createSparkles(event);
+            setTimeout(() => {
+                document.getElementById('celebration').style.display = 'none';
+                document.getElementById('btsGame').style.display = 'block';
+            }, 300);
+        }
+        
+        // Flip card function for BTS game
+        let flippedCount = 0;
+        function flipCard(card, index) {
+            if (!card.classList.contains('flipped')) {
+                card.classList.add('flipped');
+                flippedCount++;
+                
+                // After first card is flipped, show the message
+                if (flippedCount === 1) {
+                    setTimeout(() => {
+                        document.getElementById('revealMessage').style.display = 'block';
+                    }, 600);
+                }
+            }
+        }
+
+        // Initialize
+        createFloatingHearts();
+    </script>
+</body>
+</html>
